@@ -1,0 +1,30 @@
+export const languages = [
+    {
+        name:"JavaScript",
+        icon:"icons/javascript.svg"
+    },
+        {
+        name:"HTML",
+        icon:"icons/javascript.svg"
+    },
+        {
+        name:"CSS",
+        icon:"icons/javascript.svg"
+    },
+        {
+        name:"Python",
+        icon:"icons/javascript.svg"
+    },
+        {
+        name:"Java",
+        icon:"icons/javascript.svg"
+    },
+       {
+        name:"Json",
+        icon:"icons/javascript.svg"
+    },
+      {
+        name:"TypeScript",
+        icon:"icons/javascript.svg"
+    },
+]
