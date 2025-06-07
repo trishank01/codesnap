@@ -70,8 +70,11 @@ const CodeEditor = ({
       }}
       onResize={handleResize}
       className="resize-container relative"
+      style={{
+        background:background
+      }}
     >
-      <div className="code-block">
+      <div className="code-block p-8">
         <div className="code-title h-[52px] px-4 flex items-center justify-between bg-black opacity-80">
           <div className="dots flex items-center gap-1">
             <div className="w-3 h-3 rounded-full bg-[#ff5656]"></div>
@@ -84,8 +87,8 @@ const CodeEditor = ({
               className="w-full text-[hsla(0,0%100%,.6)] outline-none font-medium text-center bg-transparent"
             />
           </div>
-          <div className="icon flex justify-center items-center p-1 bg-black bg-opacity-30 rounded-sm">
-            <img src={icon} alt="" />
+          <div className="icon w-8 h-8 flex justify-center items-center p-1 bg-black bg-opacity-30 rounded-sm">
+            <img src={icon} alt="icon"  />
           </div>
         </div>
         <AceEditor
@@ -93,13 +96,14 @@ const CodeEditor = ({
           name="UNIQUE_ID_OF_DIV"
           fontSize={16}
           showGutter={false}
-          theme="twilight"
+          theme={theme}
           mode={language.toLowerCase()}
           wrapEnabled={true}
           showPrintMargin={false}
           highlightActiveLine={false}
           className="ace-editor-container"
           editorProps={{ $blockScrolling: true }}
+          
         />
       </div>
     </Resizable>
