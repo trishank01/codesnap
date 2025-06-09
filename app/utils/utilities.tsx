@@ -1,27 +1,39 @@
 export const languages = [
-  {
+  { 
+    id:0,
     name: "JavaScript",
     icon: "icons/javascript.svg",
+    extension:"js"
   },
   {
+    id:1,
     name: "HTML",
     icon: "icons/html.svg",
+    extension:"html"
   },
   {
+    id:2,
     name: "CSS",
     icon: "icons/css.svg",
+    extension:"css"
   },
   {
+    id:3,
     name: "Python",
     icon: "icons/python.svg",
+    extension:"py"
   },
   {
+    id:4,
     name: "Java",
     icon: "icons/java.svg",
+    extension:"java"
   },
   {
+    id:5,
     name: "Json",
     icon: "icons/json.svg",
+    extension:"json"
   },
 ];
 

@@ -47,7 +47,7 @@ const LanguageSelector = ({
               <div key={index}>
                 {
                   <button
-                    className="drowpdown-item  text-left p-1"
+                    className="drowpdown-item text-left p-1 cursor-pointer"
                     onClick={() => handleLanguageChange(language.name)}
                   >
                     {language.name}

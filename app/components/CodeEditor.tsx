@@ -2,6 +2,8 @@
 import { Resizable } from "re-resizable";
 import React, { useEffect, useState, useRef } from "react";
 import AceEditor from "react-ace";
+import { initialCode, languages } from "../utils/utilities";
+
 
 // languages
 import "ace-builds/src-noconflict/mode-javascript";
@@ -18,7 +20,6 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/theme-twilight";
-import { initialCode } from "../utils/utilities";
 
 interface CodeEditorProps {
   language: string;
@@ -36,8 +37,9 @@ const CodeEditor = ({
   currentPadding = "20px",
 }: CodeEditorProps) => {
   const [width, setWidth] = useState(1000);
-  const [height, setHeight] = useState<number>(500); // Remove null to ensure valid initial height
-  const [title, setTitle] = useState("Untitled-1");
+  const [height, setHeight] = useState<number>(500);
+  const [title, setTitle] = useState(`script.${languages[0]?.extension}`);
+  const [count, setCount] = useState(0);
   const [code, setCode] = useState(initialCode);
   const containerRef = useRef<HTMLDivElement>(null); // Ref to track container
 
@@ -47,6 +49,31 @@ const CodeEditor = ({
     return isNaN(value) ? 20 : value; // Fallback to 20 if parsing fails
   };
 
+  // change language extension
+  const languageExtenstion = () => {
+    languages.map((lang) =>
+      lang.name === language && setCount(lang.id) 
+    );
+
+    //setTitleExtension(`${languages[count]?.extension}`);
+    setTitle(`script.${languages[count]?.extension}`);
+  };
+
+
+  useEffect(() => {
+    languageExtenstion();
+  }, [language, count]);
+
+
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const rawValue = e.target.value;
+
+  // If user tries to edit extension, ignore it
+  const parts = rawValue.split(".");
+  const base = parts[0].replace(/[^a-zA-Z0-9_-]/g, ""); // restrict characters
+  setTitle(`${base}.${languages[count]?.extension}`);
+};
   const paddingNum = paddingValue(currentPadding);
 
   // Handle code changes
@@ -58,8 +85,7 @@ const CodeEditor = ({
   const handleResize = (
     event: MouseEvent | TouchEvent,
     direction: string,
-    ref: HTMLElement,
-    pos: { width: number; height: number }
+    ref: HTMLElement
   ) => {
     setWidth(ref.offsetWidth);
     setHeight(ref.offsetHeight);
@@ -69,7 +95,9 @@ const CodeEditor = ({
   const updateSize = () => {
     if (containerRef.current) {
       const containerHeight = containerRef.current.offsetHeight;
-      setHeight(Math.max(466, Math.min(containerHeight, window.innerHeight - 100))); // Respect minHeight and offset
+      setHeight(
+        Math.max(466, Math.min(containerHeight, window.innerHeight - 100))
+      ); // Respect minHeight and offset
     } else {
       setHeight(window.innerHeight - 100); // Fallback
     }
@@ -85,10 +113,9 @@ const CodeEditor = ({
   }, []);
 
   // Calculate editor height (total height - title bar - padding)
-  const editorHeight = height
-    ? `${height - 52 - 2 * paddingNum}px`
-    : "100%";
+  const editorHeight = height ? `${height - 52 - 2 * paddingNum}px` : "100%";
 
+  ;
   return (
     <Resizable
       minHeight={466}
@@ -120,13 +147,13 @@ const CodeEditor = ({
             <div className="w-3 h-3 rounded-full bg-[#67f772]"></div>
           </div>
           <div className="input-control w-full overflow-visible">
-       
             <input
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
               className="w-full h-[42px] text-[hsla(0,0%100%,.6)] outline-none font-medium text-center bg-transparent leading-3 py-[4px]"
             />
+
           </div>
           <div className="icon w-8 h-8 flex justify-center items-center p-1 bg-black bg-opacity-30 rounded-sm">
             <img src={icon} className="w-[33px]" alt="icon" />
