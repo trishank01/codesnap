@@ -18,7 +18,7 @@ const BackgroundSelector = ({
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
   };
-  console.log(showDropDown)
+
 
   const handleBackgroundChange = (newBackground: string) => {
     setBackground(newBackground);

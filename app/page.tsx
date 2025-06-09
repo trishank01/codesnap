@@ -5,16 +5,17 @@ import CodeEditor from "./components/CodeEditor";
 import LanguageSelector from "./components/LanguageSelector";
 import ThemeSelector from "./components/ThemeSelector";
 import BackgroundSelector from "./components/BackgroundSelector";
+import PaddingSelector from "./components/PaddingSelector";
+import { Download } from "lucide-react";
+import Footer from "./components/Footer";
 
 export default function Home() {
   const [language, setLanguage] = useState(languages[0].name);
   const [activeIcon, setActiveIcon] = useState(languages[0].icon);
   const [theme, setTheme] = useState(themes[0]);
   const [background, setBackground] = useState(backgrounds[0]);
-
-  const onCodeChange = () => {
-    return "";
-  };
+  const [paddings, setPaddings] = useState(["1rem", "2rem", "3rem", "4rem"]);
+  const [currentPadding, setCurrentPadding] = useState(paddings[2]);
 
   return (
     <main className="h-screen flex flex-col items-center justify-between">
@@ -24,21 +25,41 @@ export default function Home() {
           setLanguage={setLanguage}
           setActiveIcon={setActiveIcon}
         />
-        <ThemeSelector theme={theme} setTheme={setTheme}/>
+        <ThemeSelector theme={theme} setTheme={setTheme} />
         <BackgroundSelector
           background={background}
           setBackground={setBackground}
         />
+        <PaddingSelector
+          paddings={paddings}
+          currentPadding={currentPadding}
+          setCurrentPadding={setCurrentPadding}
+        />
+
+        <div className="export-btn self-center ml-auto">
+          <button
+            className="flex items-center  gap-3  py-3 px-3 rounded-md text-sm  text-blue-400 font-medium 
+          bg-opacity-10 hover:bg-opacity-80 hover:text-slate-50 ease-in-out transition-all duration-300 
+          cursor-pointer  bg-gray-700 hover:bg-blue-400"
+          >
+                <span >
+              <Download size={20} />
+            </span>
+            Export PNG{" "}
+        
+          </button>
+        </div>
       </header>
       <div className="code-editor-ref mt-[10rem]">
         <CodeEditor
           language={language}
           icon={activeIcon}
           theme={theme}
-          onCodeChange={onCodeChange}
           background={background}
+          currentPadding={currentPadding}
         />
       </div>
+      <Footer />
     </main>
   );
 }
